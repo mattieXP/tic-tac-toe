@@ -3,11 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tic Tac Toe Game</title>
+    <title>Tic Tac Toe</title>
     <script src="script.js" defer></script>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    
+    <header id="game-header">
+        <h1>Tic Tac Toe</h1>
+        <button id="reset-btn">Reset</button>
+    </header>
+    <div id="player-one">
+        <img src="./graphic assets/Cross.svg">
+        <h2>Player One</h2>
+            <input type="text" id="player-one-name" placeholder="Enter your name">
+            <p id="player-one-anouncement"> Your turn!</p>
+            <img id="player-one-selector" src="./graphic assets/Selector.svg">
+    </div>
+    <div id="game-board">
+        <div id="general-anouncement">
+            <h2>Let's go!</h2>
+        </div>
+        <div id="grid">
+            <div id="a1"></div>
+            <div id="b1"></div>
+            <div id="c1"></div>
+            <div id="a2"></div>
+            <div id="b2"></div>
+            <div id="c2"></div>
+            <div id="a3"></div>
+            <div id="b3"></div>
+            <div id="c3"></div>
+        </div>
+    </div>
+    <div id="player-two">
+        <img src="./graphic assets/Round.svg">
+        <h2>Player Two</h2>
+            <input type="text" id="player-two-name" placeholder="Enter your name">
+            <p id="player-two-anouncement"> Your turn!</p>
+            <img id="player-one-selector" src="./graphic assets/Selector.svg">
+    </div>
+    <footer id="game-footer">
+        <p>Made by MattieXp &copy; 2026 - following <a href="https://www.theodinproject.com/">The Odin Project</a> curriculum</p>
+    </footer>
 </body>
 </html>
