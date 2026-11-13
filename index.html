@@ -13,22 +13,20 @@
         <button id="reset-btn">Reset</button>
     </header>
     <div id="player-one">
-        <img class="img-align" src="./graphic assets/Cross.svg">
+        <img class="img-align padding" src="./graphic assets/Cross.svg">
         <h2>Player 1</h2>
             <input type="text" id="player-one-name" placeholder="Enter your name">
-            <p id="player-one-anouncement"> Your turn!</p>
-            <img class="img-align" id="player-one-selector" src="./graphic assets/Selector.svg">
+            <div class="img-align" id="player-one-selector"><img src="./graphic assets/Selector.svg"></div>
+            <div class="anouncements" id="player-one-anouncement"></div>
     </div>
     <div id="game-board">
-        <div id="general-anouncement">
-            <p>Let's go!</p>
-        </div>
+        <div class="anouncements" id="general-anouncement"></div>
         <div id="grid">
-            <div class="game-box top-left-radius" id="a1"><img src="./graphic assets/Cross.svg"></div>
+            <div class="game-box top-left-radius" id="a1"></div>
             <div class="game-box" id="b1"></div>
             <div class="game-box top-right-radius" id="c1"></div>
             <div class="game-box" id="a2"></div>
-            <div class="game-box" id="b2"><img src="./graphic assets/Round.svg"></div>
+            <div class="game-box" id="b2"></div>
             <div class="game-box" id="c2"></div>
             <div class="game-box bottom-left-radius" id="a3"></div>
             <div class="game-box" id="b3"></div>
@@ -36,11 +34,11 @@
         </div>
     </div>
     <div id="player-two">
-        <img class="img-align" src="./graphic assets/Round.svg">
+        <img class="img-align padding" src="./graphic assets/Round.svg">
         <h2>Player 2</h2>
             <input type="text" id="player-two-name" placeholder="Enter your name">
-            <p id="player-two-anouncement"> Your turn!</p>
-            <img class="img-align" id="player-two-selector" src="./graphic assets/Selector.svg">
+            <div class="img-align" id="player-two-selector"><img src="./graphic assets/Selector.svg"></div>
+            <div class="anouncements" id="player-two-anouncement"></div>
     </div>
     <footer id="game-footer">
         <p>Made by MattieXp &copy; 2026 - following <a href="https://www.theodinproject.com/">The Odin Project</a> curriculum</p>

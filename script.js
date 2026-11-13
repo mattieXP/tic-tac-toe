@@ -1,9 +1,3 @@
-/*const generalAnouncement = document.querySelector("#general-anouncement");
-const PlayerOneAnouncement = document.querySelector("#player-one-anouncement");
-const PlayerTwoAnouncement = document.querySelector("#player-two-anouncement")
-const GameGrid = document.querySelector("#grid");*/
-
-
 
 const gameBoard = (function() {
     let grid = [0, 0, 0, 0, 0, 0, 0, 0, 0];
@@ -39,10 +33,17 @@ const gameControler = (function() {
 
     //Definir à qui est le prochain tour
     const nextPlayer = function() {
-            if (activePlayer === playerOne) {
-                activePlayer = playerTwo;
-            } else {activePlayer = playerOne};
-            return activePlayer;
+        if (activePlayer === playerOne) {
+            activePlayer = playerTwo;
+            displayDOM.anouncements("general", "");
+            displayDOM.anouncements("playerOne", "");
+            displayDOM.anouncements("playerTwo", "Your turn");
+        } else {
+            activePlayer = playerOne;
+            displayDOM.anouncements("playerTwo", "");
+            displayDOM.anouncements("playerOne", "Your turn");
+        };
+        return activePlayer;
     };
 
      //Tableau des solutions
@@ -69,12 +70,15 @@ const gameControler = (function() {
                 if (resultGrid[a] === playerOne.getMarker()) {
                     winner = playerOne.getName();
                 } else {winner = playerTwo.getName()};
+                displayDOM.anouncements("end", `${winner} wins! `);
                 break;
             };
         };
 
         if (result === "await" && resultGrid.every((n) => n != 0 )) {
-            result = "tie"; }
+            result = "tie";
+            displayDOM.anouncements("end", "It's a tie!");
+        }
 
        return {result, winner};
     };
@@ -85,6 +89,7 @@ const gameControler = (function() {
             let marker = activePlayer.getMarker();
             let moveAccepted = gameBoard.putMarker(index, marker);
             if (moveAccepted) {
+                displayDOM.refreshGrid();
                 const status = getResult().result;
                 if (status === "win" || status === "tie") {
                     gameRunning = false;
@@ -102,6 +107,8 @@ const gameControler = (function() {
         gameBoard.resetGrid();
         activePlayer = playerOne;
         gameRunning = true;
+        displayDOM.refreshGrid();
+        displayDOM.anouncements("init");
     };
 
     return {playRound, getResult, resetAll};
@@ -110,7 +117,92 @@ const gameControler = (function() {
 
 const displayDOM = (function() {
 
-    //Anonce quand gagné et ex-aequo + Freeze les cases si gagné ou ex-aequo
+    //Initialise tous les composants du DOM
+    const resetButton = document.querySelector("#reset-btn");
+    const generalAnouncement = document.querySelector("#general-anouncement");
+    const playerOneAnouncement = document.querySelector("#player-one-anouncement");
+    const playerOneSelector = document.querySelector("#player-one-selector");
+    const playerTwoAnouncement = document.querySelector("#player-two-anouncement");
+    const playerTwoSelector = document.querySelector("#player-two-selector");
+    const DOM_Boxes = document.querySelectorAll(".game-box");
+    const p1Name = document.querySelector("#player-one-name");
+    const p2Name = document.querySelector("#player-one-name");
+
+
+    //Créer les images
+    const crossImg = new Image(40, 40);
+    crossImg.src = "./graphic assets/Cross.svg";
+    const roundImg = new Image(50, 50);
+    roundImg.src = "./graphic assets/Round.svg";
+
+    //Surveille le click et donne à playRound quel element du tableau modifier
+    DOM_Boxes.forEach((element, index) => {
+        element.addEventListener("click", function() {
+            console.log(index);
+            gameControler.playRound(index);
+        });
+    });
+
+    //Met à jour la grille à chaque tour
+    const refreshGrid = function() {
+
+        let boxes = gameBoard.getGrid();
+        boxes.forEach((e, i) => {
+            DOM_Boxes[i].textContent = "";
+            if (e === "X") {
+                const cross = crossImg.cloneNode();
+                DOM_Boxes[i].appendChild(cross);
+            } else if (e === "O") {
+                const round = roundImg.cloneNode();
+                DOM_Boxes[i].appendChild(round);
+            };
+        });
+        };
+
+    //Anonces par joueur : Your turn + selector
+    const anouncements = function(placeholder, anouncement) {
+        switch (placeholder) {
+            case "playerOne":
+                playerOneAnouncement.textContent = anouncement;
+                playerOneSelector.classList.remove("hidden");
+                playerTwoSelector.classList.add("hidden");
+            break;
+            case "playerTwo":
+                playerTwoAnouncement.textContent = anouncement;
+                playerTwoSelector.classList.remove("hidden");
+                playerOneSelector.classList.add("hidden");
+            break;
+            case "general":
+                generalAnouncement.textContent = anouncement;
+            break;
+            case "end":
+                playerOneSelector.classList.add("hidden");
+                playerTwoSelector.classList.add("hidden");
+                generalAnouncement.textContent = anouncement;
+                playerTwoAnouncement.textContent = "";
+                playerOneAnouncement.textContent = "";
+            break;
+            case "init":
+                generalAnouncement.textContent = "Let's go!";
+                playerOneAnouncement.textContent = "Your turn";
+                playerTwoAnouncement.textContent = "";
+                playerTwoSelector.classList.add("hidden");
+                playerOneSelector.classList.remove("hidden");
+        }
+    }
+
+
+    //Surveille le click du Reset et applique la fonction
+    resetButton.addEventListener("click", function() {
+        gameControler.resetAll();
+    });
+
+    //Si les noms sont remplis, les récupérer
+    const getNames = function(){
+        let name1 = p1Name.addEventListener("")
+    };
+
+    return {refreshGrid, anouncements};
 
 })();
 
@@ -126,3 +218,5 @@ function createPlayer(name, marker) {
     return {getName, getMarker};
 };
 
+//Initialise la partie
+displayDOM.anouncements("init", "Let's go!");

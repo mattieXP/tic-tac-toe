@@ -85,7 +85,7 @@ h2 {
     padding-bottom: 50px;
 }
 
-h2, p, button, label, input {
+h2, p, button, label, input, .anouncements {
     font-family: "Jua", system-ui, sans-serif;
 }
 
@@ -137,6 +137,8 @@ p {
 .img-align {
     display: flex;
     justify-self: center;
+}
+.padding {
     padding-bottom: 25px;
 }
 
@@ -159,6 +161,7 @@ p {
 #game-board {
     grid-area: 2 / 2 / 3 / 3;
     display: grid;
+    margin: 25px 0px;
     grid-template-rows: 100px 1fr;
     justify-content: center;
     justify-items: center;
@@ -169,7 +172,8 @@ p {
     grid-row: 1 / 2;
 }
 
-#general-anouncement p {
+.anouncements {
+    padding-top: 25px;
     font-size: 1.5em;
     font-weight: bold;
 }
@@ -260,4 +264,8 @@ border-radius: 6px 0px 0px 0px;
     background-color: var(--secondary-color);
     color: var(--primary-color);
     font-weight: 200;
+}
+
+.hidden {
+    visibility: hidden;
 }
