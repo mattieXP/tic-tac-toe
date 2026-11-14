@@ -68,8 +68,18 @@ const gameControler = (function() {
              if (resultGrid[a] != 0 && resultGrid[a] === resultGrid[b] && resultGrid[b] === resultGrid[c]) {
             result = "win";
                 if (resultGrid[a] === playerOne.getMarker()) {
-                    winner = playerOne.getName();
-                } else {winner = playerTwo.getName()};
+                    if (displayDOM.pseudo1() != "") {
+                        winner = displayDOM.pseudo1();
+                    } else {
+                        winner = playerOne.getName();
+                    };
+                } else {
+                    if (displayDOM.pseudo2() != "") {
+                        winner = displayDOM.pseudo2();
+                    } else {
+                        winner = playerTwo.getName();
+                    };
+                };
                 displayDOM.anouncements("end", `${winner} wins! `);
                 break;
             };
@@ -109,6 +119,7 @@ const gameControler = (function() {
         gameRunning = true;
         displayDOM.refreshGrid();
         displayDOM.anouncements("init");
+        displayDOM.inputReset();
     };
 
     return {playRound, getResult, resetAll};
@@ -126,7 +137,7 @@ const displayDOM = (function() {
     const playerTwoSelector = document.querySelector("#player-two-selector");
     const DOM_Boxes = document.querySelectorAll(".game-box");
     const p1Name = document.querySelector("#player-one-name");
-    const p2Name = document.querySelector("#player-one-name");
+    const p2Name = document.querySelector("#player-two-name");
 
 
     //Créer les images
@@ -198,11 +209,22 @@ const displayDOM = (function() {
     });
 
     //Si les noms sont remplis, les récupérer
-    const getNames = function(){
-        let name1 = p1Name.addEventListener("")
+    const pseudo1 = function() {
+        console.log(p1Name.value);
+        return p1Name.value; 
     };
 
-    return {refreshGrid, anouncements};
+    const pseudo2 = function() {
+        return p2Name.value;
+    };
+
+    //Reset les inputs
+    const inputReset = function() {
+        p1Name.value = "";
+        p2Name.value = "";
+    }
+
+    return {refreshGrid, anouncements, pseudo1, pseudo2, inputReset};
 
 })();
 
